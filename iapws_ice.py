@@ -1,5 +1,16 @@
 from sympy import log
 
+"""
+
+Ice Ih empirical fit.
+
+Citation:
+Feistel, Rainer and Wolfgang Wagner. "A New Equation of State for H2O Ice Ih." 
+Journal of Physical and Chemical Reference Data 35, 1021 (2006); https://doi.org/10.1063/1.2183324
+
+http://www.iapws.org/relguide/Ice-2009.html
+"""
+
 from algebraic_manipulations import *
 
 from iapws_boundaries import p_t, T_t

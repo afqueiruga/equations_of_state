@@ -1,6 +1,16 @@
 import numpy as np
 from sympy import log, exp
 
+"""
+Fits for liquid, gas, supercritical H2O.
+
+International Association for the Properties of Water and Steam (IAPWS), Revised Release on the IAPWS Industrial Formulation 1997 for the Thermodynamic Properties of Water and Steam,
+Lucerne, Switzerland, 2007.
+
+Citation:
+http://www.iapws.org/relguide/IF97-Rev.html
+"""
+
 from algebraic_manipulations import *
 
 from iapws_boundaries import R, triple_point, T_t,p_t,\

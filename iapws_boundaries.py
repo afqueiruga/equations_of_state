@@ -1,6 +1,12 @@
 import numpy as np
 from numpy import exp
 
+"""
+Boundaries between the phases of water, taken from the IAPWS 1995 release.
+
+http://www.iapws.org/relguide/IAPWS-95.html
+"""
+
 R = 0.461526e3
 
 triple_point   = T_t,p_t = (273.16, 611.657)
