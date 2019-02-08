@@ -1,23 +1,11 @@
 import numpy as np
-import sympy
 from sympy import log, exp
 
-R = 0.461526e3
+from algebraic_manipulations import *
 
-triple_point   = T_t,p_t = (273.16, 611.657)
-critical_point = T_c,p_c = (647.096, 22.064e6)
-rho_critical   = rho_c = 322.0
+from iapws_boundaries import R, triple_point, T_t,p_t,\
+     critical_point,T_c,p_c,rho_critical, rho_c
 
-def density_enthalpy(gibbs):
-    T,p = sympy.symbols('T p')
-    g = gibbs(T,p)
-    density = 1/g.diff(p)
-    enthalpy = g - T * g.diff(T)
-    rhovec = np.vectorize(sympy.lambdify([T,p],density))
-    hvec = np.vectorize(sympy.lambdify([T,p],enthalpy))
-                   
-    return (lambda x,y : np.real(rhovec(x,y))),\
-           (lambda x,y : np.real(  hvec(x,y)))
 
 def gibbs_region1(T,p):
     p1_star = 1.653e7
@@ -198,14 +186,7 @@ def helmholtz_region3(T,rho):
         for ni,(_,Ii,Ji) in zip(ni3[1:],iIJ3[1:])
     ])
     return R*T * f
-
-def pressure_enthalpy_from_helmholtz(f_func):
-    rho,T = sympy.symbols('rho T')
-    f = f_func(T,rho)
-    p = rho**2 * f.diff(rho)
-    h = f - T*f.diff(T) + rho*f.diff(rho)
-    return np.vectorize(sympy.lambdify([T,rho],p)),\
-            np.vectorize(sympy.lambdify([T,rho],h))
+pressure_region3,enthalpy_region3 = pressure_enthalpy_from_helmholtz(helmholtz_region3)
     
     
     
