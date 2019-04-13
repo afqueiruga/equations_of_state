@@ -73,3 +73,32 @@ P_expr = melting_pressure_I(T)
 @np.vectorize
 def melting_temperature_I(P):
     return float(sympy.nsolve(P_expr-P,T, 0.5*(melting_pressure_range_I[1]-melting_pressure_range_I[0]) ))
+
+
+def plot_boundaries():
+    """Plot the phase boundaries"""
+    from matplotlib import pylab as plt
+    plt.semilogy(triple_point[0],triple_point[1],'o')
+    plt.semilogy(critical_point[0],critical_point[1],'o')
+
+    for f,r in [
+            (vapor_pressure,(T_t,T_c)),
+            (melting_pressure_I,melting_pressure_range_I),
+            (melting_pressure_III,melting_pressure_range_III),
+            (melting_pressure_V,melting_pressure_range_V),
+            (melting_pressure_VI,melting_pressure_range_VI),
+            (melting_pressure_VII,melting_pressure_range_VII),
+            (sublimation_pressure,sublimation_pressure_range)
+            ]:
+        _ts = np.linspace(r[0],r[1])
+        plt.semilogy(_ts,f(_ts),'-')
+    plt.xlim(100,900)
+    plt.ylim(1,10.0e10)
+    plt.xlabel('Temperature (K)')
+    plt.ylabel('Pressure (Pa)')
+    plt.text(120,1e3,'Ice I')
+    plt.text(200,1e10,'Ices III, V, VI, VII')
+    plt.text(400,1e3,'Gas')
+    plt.text(400,1e7,'Liquid')
+    plt.text(700,1e8,'Supercritical')
+    
