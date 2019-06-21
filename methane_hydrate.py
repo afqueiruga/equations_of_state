@@ -1,5 +1,5 @@
 import numpy as np
-from sympy import log, exp
+from sympy import log, exp, Piecewise
 
 """
 Fits for methane gas and methane hydrate. 
@@ -11,7 +11,6 @@ Molar_weight_ch4   = Mg = 16.04 #kg/mol
 Molar_weight_water = Mw = 18.02 #kg/mol
 Hydration_Number = NH = 6
 Mh = NH*Mw+Mg
-
 def enthalpy_hydrate(T,p):
     return (T-273.15)*2100.0
 def density_hydrate(T,p):
@@ -47,6 +46,7 @@ def horner(x,a):
     for i in xrange(len(a)-2,-1,-1):
         r += r*x+a[i]
     return r
+@np.vectorize
 def pe_hyd_stab(T):
     pa = 1.0e6*exp(horner(T,pe_hyd_stab_A))
     pb = 1.0e6*exp(horner(T,pe_hyd_stab_B))
@@ -58,3 +58,10 @@ def pe_hyd_stab(T):
         (pc+2*(272-T)*(pb-pc), T>271.5),
         (pb,True)
     )
+quadruple_point = (273.2, pe_hyd_stab(273.2) )
+
+def plot_boundaries():
+    from matplotlib import pylab as plt
+    _ts = np.linspace(150,320)
+    plt.semilogy(_ts,pe_hyd_stab(_ts),'-')
+    plt.semilogy(quadruple_point[0],quadruple_point[1],'o')
