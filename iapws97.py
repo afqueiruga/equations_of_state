@@ -11,9 +11,9 @@ Citation:
 http://www.iapws.org/relguide/IF97-Rev.html
 """
 
-from algebraic_manipulations import *
+from .algebraic_manipulations import *
 
-from iapws_boundaries import R, triple_point, T_t,p_t,\
+from .iapws_boundaries import R, triple_point, T_t,p_t,\
      critical_point,T_c,p_c,rho_critical, rho_c
 
 

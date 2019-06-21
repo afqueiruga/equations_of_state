@@ -102,3 +102,21 @@ def plot_boundaries():
     plt.text(400,1e7,'Liquid')
     plt.text(700,1e8,'Supercritical')
     
+
+def plot_boundaries_plotly():
+    import plotly.graph_objs as go
+    traces = []
+    for f,r in [
+            (vapor_pressure,(T_t,T_c)),
+            (melting_pressure_I,melting_pressure_range_I),
+            (melting_pressure_III,melting_pressure_range_III),
+            (melting_pressure_V,melting_pressure_range_V),
+            (melting_pressure_VI,melting_pressure_range_VI),
+            (melting_pressure_VII,melting_pressure_range_VII),
+            (sublimation_pressure,sublimation_pressure_range)
+            ]:
+        _ts = np.linspace(r[0],r[1])
+        trace = go.Scatter(x=_ts,y=f(_ts),mode='lines',                           
+                           line=dict(color='lightblue'),showlegend=False)
+        traces.append(trace)
+    return traces
