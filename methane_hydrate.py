@@ -44,7 +44,7 @@ pe_hyd_stab_C = [
 
 def horner(x,a):
     r = a[-1]
-    for i in xrange(len(a)-2,-1,-1):
+    for i in range(len(a)-2,-1,-1):
         r += r*x+a[i]
     return r
 @np.vectorize
